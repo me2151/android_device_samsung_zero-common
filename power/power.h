@@ -45,6 +45,8 @@ using namespace std;
 #define POWER_FINGERPRINT_REGULATOR       "/sys/class/fingerprint/fingerprint/regulator"
 #define POWER_FINGERPRINT_WAKELOCKS       "/sys/class/fingerprint/fingerprint/wakelocks"
 
+#define POWER_DEFAULT_BOOSTPULSE    50000
+
 #ifdef POWER_MULTITHREAD_LOCK_PROTECTION
   #define POWER_LOCK()      pthread_mutex_lock(&power->lock)
   #define POWER_UNLOCK()    pthread_mutex_unlock(&power->lock)
@@ -64,6 +66,7 @@ struct sec_power_module {
 	pthread_mutex_t lock;
 
 	bool initialized;
+	bool dozing;
 
 	enum sec_device_variant variant;
 
@@ -89,9 +92,13 @@ static void power_hint(struct power_module *module, power_hint_t hint, void *dat
 
 /** Profiles */
 static void power_set_profile(struct sec_power_module *power, int profile);
+static void power_reset_profile(struct sec_power_module *power);
 
 /** Boost */
-static void power_boostpulse(int duration);
+static void power_boostpulse(struct sec_power_module *power, int duration);
+static void power_boostpulse_cpu(struct sec_power_module *power, int core, int duration);
+static void power_boostpulse_cpu_cpugov(int core, int duration);
+static void power_boostpulse_cpu_fallback(struct sec_power_module *power, int core, int duration);
 
 /** Inputs */
 static void power_fingerprint_state(bool state);

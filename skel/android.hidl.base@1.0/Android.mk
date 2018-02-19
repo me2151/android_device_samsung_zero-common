@@ -1,6 +1,5 @@
-
 #
-# Copyright (C) 2016 The CyanogenMod Project
+# Copyright (C) 2018 TeamNexus
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,5 +14,14 @@
 # limitations under the License.
 #
 
-# Video scaling issue workaround
-TARGET_OMX_LEGACY_RESCALING := true
+LOCAL_PATH := $(call my-dir)
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := \
+	android.hidl.base@1.0.cpp
+
+LOCAL_MODULE := android.hidl.base@1.0
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+
+include $(BUILD_SHARED_LIBRARY)

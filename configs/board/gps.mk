@@ -14,22 +14,5 @@
 # limitations under the License.
 #
 
-# Radio
-PRODUCT_PACKAGES += \
-	libxml2 \
-	libprotobuf-cpp-full \
-	rild \
-	libreference-ril \
-	libril \
-	libsecril-client \
-	libsecril-client-sap \
-	android.hardware.radio@1.0 \
-	android.hardware.radio.deprecated@1.0 \
-	modemloader
-
-# Dual-SIM Support
-ifeq ($(BOARD_HAS_DUAL_SIM),true)
-  include $(LOCAL_PATH)/configs/radio/dual/product.mk
-else
-  include $(LOCAL_PATH)/configs/radio/single/product.mk
-endif
+# Shim
+TARGET_LD_SHIM_LIBS += /system/bin/gpsd|/vendor/lib64/gpsd_shim.so

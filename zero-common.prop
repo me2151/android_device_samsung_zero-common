@@ -88,7 +88,7 @@ logd.logpersistd.size.rotate=64
 # Media
 #
 media.sf.omx-plugin=libffmpeg_omx.so,libsomxcore.so
-persist.media.treble_omx=true
+persist.media.treble_omx=false
 
 #
 # Networking
@@ -114,6 +114,10 @@ ro.telephony.get_imsi_from_sim=true
 ro.telephony.ril_class=SlteRIL
 telephony.lteOnGsmDevice=1
 telephony.lteOnCdmaDevice=0
+
+# read single/dual-SIM properties
+import /vendor/etc/properties/radio.prop
+import /efs/factory.prop
 
 #
 # SoC

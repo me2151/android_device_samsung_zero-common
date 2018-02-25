@@ -18,6 +18,8 @@ LOCAL_PATH := device/samsung/zero-common
 
 BOARD_VENDOR := samsung
 
+TARGET_VENDOR_PROP := $(LOCAL_PATH)/zero-common.prop
+
 # Core board-properties
 TARGET_BOOTLOADER_BOARD_NAME := universal7420
 TARGET_BOARD_PLATFORM := exynos5

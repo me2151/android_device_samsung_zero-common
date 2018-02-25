@@ -16,7 +16,7 @@
 #
 
 # Video scaling issue workaround
-TARGET_OMX_LEGACY_RESCALING := true
+#TARGET_OMX_LEGACY_RESCALING := false
 
 zero_shims_omx := \
     /system/lib/omx/libOMX.Exynos.AVC.Decoder.so|/vendor/lib/SHIM_TARGET.so \

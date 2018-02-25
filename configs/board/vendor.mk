@@ -15,4 +15,4 @@
 #
 
 # Vendor
-TARGET_UNOFFICIAL_BUILD_ID := TeamNexus
+TARGET_UNOFFICIAL_BUILD_ID := Invictrix

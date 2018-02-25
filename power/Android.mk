@@ -14,14 +14,8 @@
 # limitations under the License.
 #
 
-# include user-sided power settings
-include device/samsung/zero-common/power/settings/Android.mk
-
 LOCAL_PATH := device/samsung/zero-common/power
 
-#
-# power-HAL
-#
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := \
@@ -31,8 +25,7 @@ LOCAL_SRC_FILES := \
 LOCAL_SHARED_LIBRARIES := \
 	libcutils \
 	libhardware \
-	liblog \
-	libpower-config
+	liblog
 
 LOCAL_MODULE               := power.$(TARGET_BOARD_PLATFORM)
 LOCAL_MODULE_RELATIVE_PATH := hw
@@ -48,32 +41,25 @@ ifneq (,$(wildcard hardware/nexus/interfaces/power/1.0/))
   LOCAL_CFLAGS += -DPOWER_HAS_NEXUS_HINTS
 endif
 
-# Enables the advanced mutex-protection for better protection
-# against problems with multithreading, may cause certain
-# deadlocks, but is still recommended
-# LOCAL_CFLAGS += -DPOWER_MULTITHREAD_LOCK_PROTECTION
+# Enables mutex-protection against multithreading-problems
+# but may cause deadlocks while booting. Recommended if 
+# problems can be traced back to overlapping HAL-calls
+# LOCAL_CFLAGS += -DLOCK_PROTECTION
 
-include $(BUILD_SHARED_LIBRARY)
+# Enforces strict limitations of rules present in power-HAL.
+# This may cause errors but ensures the stability of the
+# power-HAL
+LOCAL_CFLAGS += -DSTRICT_BEHAVIOUR
 
-#
-# power-configuration library
-#
-include $(CLEAR_VARS)
+# Allow the power-HAL to invoke the pm-interfaces to
+# shutdown/boot the fingerprint. This may result in a longer
+# screen-on-delay and randomly non-working fingerprint-sensor
+# but ensures a complete shutdown of the sensor. The delay is
+# required to properly boot up the fingerprint before
+# continuing to set the sensor up
+# LOCAL_CFLAGS += -DFINGERPRINT_PM
+# LOCAL_CFLAGS += -DFINGERPRINT_PM_DELAY=100
 
-LOCAL_SRC_FILES := \
-	config.cpp \
-	utils.cpp
-
-LOCAL_C_INCLUDES += system/core/base/include/
-
-LOCAL_SHARED_LIBRARIES := \
-	libbase \
-	libcutils \
-	liblog
-
-LOCAL_MODULE             := libpower-config
-LOCAL_MODULE_TAGS        := optional
-LOCAL_CFLAGS             := -Wall -Werror -Wno-unused-parameter -Wno-unused-function
-LOCAL_PROPRIETARY_MODULE := true
+LOCAL_CFLAGS += -DNR_CPUS=$(TARGET_NR_CPUS)
 
 include $(BUILD_SHARED_LIBRARY)

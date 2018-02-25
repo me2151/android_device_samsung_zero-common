@@ -19,14 +19,17 @@
 
 #define LOG_TAG "power.exynos5"
 
-#define LOG_NDEBUG 1
+#define LOG_NDEBUG 0
 
 #include <utils/Log.h>
 
 #if LOG_NDEBUG
   #define ALOGDD  ALOGD
 #else
-  #define ALOGDD(...)  do { } while(0)
+  #define ALOGDD(...)
 #endif
+
+#define ALOGI_HINT(hint)	ALOGI("%s: hint(" hint ", %d, %llu)", __func__, value, (unsigned long long)data);
+#define ALOGDD_HINT(hint)	ALOGDD("%s: hint(" hint ", %d, %llu)", __func__, value, (unsigned long long)data);
 
 #endif // EXYNOS5_POWER_HAL_LOG_H_INCLUDED

@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2016 The CyanogenMod Project
+# Copyright (C) 2018 TeamNexus
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,18 +14,22 @@
 # limitations under the License.
 #
 
-# NFC-Configs
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/nfc/nfcee_access.xml:system/etc/nfcee_access.xml \
-    $(LOCAL_PATH)/configs/nfc/libnfc-sec-hal.conf:system/etc/libnfc-sec-hal.conf \
-    $(LOCAL_PATH)/configs/nfc/libnfc-sec.conf:system/etc/libnfc-brcm.conf
+LOCAL_PATH := $(call my-dir)
 
-# NFC-Packages
-PRODUCT_PACKAGES += \
-    nfc_nci.universal7420 \
-    libnfc-nci \
-    libnfc_nci_jni \
-    NfcNci \
-    Tag \
-    com.android.nfc_extras \
-    android.hardware.nfc@1.0-impl
+include $(CLEAR_VARS)
+
+LOCAL_SRC_FILES := \
+	nfc-nci.cpp
+
+LOCAL_SHARED_LIBRARIES := \
+	libcutils \
+	libhardware \
+	liblog
+
+LOCAL_MODULE               := nfc_nci.$(TARGET_BOOTLOADER_BOARD_NAME)
+LOCAL_MODULE_RELATIVE_PATH := hw
+LOCAL_MODULE_TAGS          := optional
+LOCAL_CFLAGS               := -Wall -Werror
+LOCAL_VENDOR_MODULE        := true
+
+include $(BUILD_SHARED_LIBRARY)

@@ -14,21 +14,8 @@
 # limitations under the License.
 #
 
-# HIDL
-PRODUCT_PACKAGES += \
-	android.hardware.gnss@1.0-impl \
-	android.hardware.gnss@1.0-service
+# Shim
+TARGET_LD_SHIM_LIBS += /system/bin/gpsd|/vendor/lib64/libsensor_shim.so
 
-# OSS packages
-PRODUCT_PACKAGES += \
-    gps.default
-
-# Shims
-PRODUCT_PACKAGES += \
-    libsensor_shim
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/gps/gps.conf:system/etc/gps.conf \
-    $(LOCAL_PATH)/configs/gps/gps.xml:system/etc/gps.xml \
-    $(LOCAL_PATH)/configs/gps/gnss.conf:system/etc/gnss.conf \
-    $(LOCAL_PATH)/configs/gps/lhd.conf:system/etc/lhd.conf
+# GNSS
+# TARGET_SEC_GPS_GPIO_POWER_FILE := /sys/class/sec/gps/GPS_PWR_EN/value

@@ -1,3 +1,4 @@
+
 #
 # Copyright (C) 2016 The CyanogenMod Project
 #
@@ -17,8 +18,7 @@
 LOCAL_PATH := $(call my-dir)
 
 ifeq ($(BOARD_VENDOR),samsung)
-ifneq ($(filter zerofltexx zeroltexx zeroflteduo zerolteduo zerofltecan zeroltecan zerofltespr zeroltespr 
-zeroflteskt zerolteskt noblelte nobleltetmo,$(TARGET_DEVICE)),)
+ifneq ($(filter zerofltexx zeroltexx zeroflteduo zerolteduo zerofltecan zeroltecan zerofltespr zeroltespr zeroflteskt zerolteskt noblelte nobleltetmo,$(TARGET_DEVICE)),)
   include $(call all-subdir-makefiles,$(LOCAL_PATH))
 endif
 endif
